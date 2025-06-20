@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS:com.mysql.cj.jdbc.Driver}
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:websocket}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:12345}
+  jpa:
+    hibernate:
+      dialect: ${DB_DIALECT:org.hibernate.dialect.MySQL8Dialect}
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+jwt:
+  accessSecret: ${JWT_ACCESS_SECRET:hsgJ6F6hOzywA6nvbP8jNL5T6MjKbEq8Mv0G7DZjsyo=}
+  refreshSecret: ${JWT_REFRESH_SECRET:24c764d47fdc9b060210380885a1c0c0d3e97b5df42476cea79bb11006280f22}

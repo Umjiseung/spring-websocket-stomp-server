@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: ${DB_DRIVER_CLASS:com.mysql.cj.jdbc.Driver}
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:websocket}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    username: ${DB_USER:root}
-    password: ${DB_PASSWORD:12345}
+    url: jdbc:mysql://localhost:3306/${DB_NAME:websocket}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: 12345
   jpa:
     hibernate:
       dialect: ${DB_DIALECT:org.hibernate.dialect.MySQL8Dialect}

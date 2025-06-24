@@ -7,8 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import server.domain.auth.presentation.dto.response.TokenResponseDto;
-import server.global.security.exception.ExpiredTokenException;
-import server.global.security.exception.InvalidTokenException;
+import server.global.exception.GlobalException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -47,9 +46,9 @@ public class JwtProvider {
             Jwts.parserBuilder().setSigningKey(getSignInAccessKey()).build().parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException e) {
-            throw new ExpiredTokenException();
+            throw new GlobalException("만료된 토큰입니다.", 401);
         } catch (Exception e) {
-            throw new InvalidTokenException();
+            throw new GlobalException("유효하지 않은 토큰입니다.", 401);
         }
     }
 

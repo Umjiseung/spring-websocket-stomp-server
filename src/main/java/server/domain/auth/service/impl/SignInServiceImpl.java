@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.domain.auth.presentation.dto.request.SignInRequestDto;
 import server.domain.auth.presentation.dto.response.TokenResponseDto;
+import server.domain.auth.repository.RefreshTokenRepository;
 import server.domain.auth.service.SignInService;
 import server.domain.user.entity.User;
 import server.domain.user.repository.UserRepository;
 import server.global.exception.GlobalException;
 import server.global.security.jwt.JwtProvider;
+import server.global.util.count.RefreshToken;
 
 @Service
 @Transactional
@@ -20,6 +22,7 @@ public class SignInServiceImpl implements SignInService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public TokenResponseDto execute(SignInRequestDto dto) {
         User user = userRepository.findByNickname(dto.getNickname())
@@ -30,6 +33,12 @@ public class SignInServiceImpl implements SignInService {
 
         TokenResponseDto responseDto = jwtProvider.generateTokenDto(user.getNickname());
 
+        refreshTokenRepository.save(RefreshToken.builder()
+                .nickname(user.getNickname())
+                .token(responseDto.getRefreshToken())
+                .build());
+
+        return responseDto;
 
     }
 
